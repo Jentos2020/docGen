@@ -1,3 +1,8 @@
-/venv
+venv
 .env
 *.pyc
+docgen/docs/dirt/*
+docgen/docs/doc_templates/*
+docgen/docs/random_faces/*
+docgen/docs/completed/*
+docgen/docs/new_faces/*
