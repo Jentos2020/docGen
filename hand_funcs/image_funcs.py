@@ -16,9 +16,21 @@ async def imgStart(msg: types.Message, state: FSMContext):
 
 # докген генерация и выдача
 async def imgReady(msg: types.Message, state: FSMContext):
-    if not await state.get_data():
+    imgData = await state.get_data()
+    
+    # проверяем есть ли уже данные, отличаются ли
+    # новые данные от старых и была ли ошибка
+    try:
+        if msg.text == imgData['imgData']:
+            pass
+        else:
+            if not (msg.text == 'Еще'):
+                await state.update_data(imgData=msg.text)
+    except:
         await state.update_data(imgData=msg.text)
     imgData = await state.get_data()
+    
+    # генерация изображения c ответом и обработка ошибок 
     validatedData = validate(imgData['imgData'].split())
     if validatedData:
         waiting = await msg.answer(text='\u231B_Изображение генерируется\.\.\._', parse_mode='MarkdownV2', reply_markup=setImgReadyKb())
